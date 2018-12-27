@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "643076842855",
+    "firebase_url": "https://lojaflutter-508e4.firebaseio.com",
+    "project_id": "lojaflutter-508e4",
+    "storage_bucket": "lojaflutter-508e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:643076842855:android:7aeab0cf0a4bc4ed",
+        "android_client_info": {
+          "package_name": "com.pongelupe.lojavirtual"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "643076842855-1odlp2d16d6q5f36kilark50els5qp0a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4pFjscFr5WglOJbSzK4mK1V-5I42urS8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
