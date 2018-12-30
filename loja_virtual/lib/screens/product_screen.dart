@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:loja_virtual/datas/cart_product.dart';
 import 'package:loja_virtual/datas/product_data.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:loja_virtual/models/cart_model.dart';
+import 'package:loja_virtual/models/user_model.dart';
+import 'package:loja_virtual/screens/login_screen.dart';
 
 class ProductScreen extends StatefulWidget {
   final ProductData product;
@@ -20,7 +24,9 @@ class _ProductScreenState extends State<ProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Color primaryColor = Theme.of(context).primaryColor;
+    final Color primaryColor = Theme
+        .of(context)
+        .primaryColor;
 
     return Scaffold(
       appBar: AppBar(
@@ -33,7 +39,7 @@ class _ProductScreenState extends State<ProductScreen> {
               aspectRatio: 0.9,
               child: Carousel(
                 images:
-                    _product.images.map((url) => NetworkImage(url)).toList(),
+                _product.images.map((url) => NetworkImage(url)).toList(),
                 dotSize: 4.0,
                 dotSpacing: 15.0,
                 dotBgColor: Colors.transparent,
@@ -51,7 +57,8 @@ class _ProductScreenState extends State<ProductScreen> {
                   style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
                 ),
                 Text(
-                  "R\$ ${_product.price.toStringAsFixed(2).replaceAll(".", ",")}",
+                  "R\$ ${_product.price.toStringAsFixed(2).replaceAll(
+                      ".", ",")}",
                   maxLines: 3,
                   style: TextStyle(
                       fontSize: 22.0,
@@ -76,35 +83,52 @@ class _ProductScreenState extends State<ProductScreen> {
                         childAspectRatio: 0.5,
                       ),
                       children: _product.sizes
-                          .map((size) => GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    this.size = size;
-                                  });
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.0)),
-                                      border: Border.all(
-                                          color: this.size == size
-                                              ? primaryColor
-                                              : Colors.grey[500],
-                                          width: 3.0)),
-                                  width: 50.0,
-                                  alignment: Alignment.center,
-                                  child: Text(size),
-                                ),
-                              ))
+                          .map((size) =>
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                this.size = size;
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(4.0)),
+                                  border: Border.all(
+                                      color: this.size == size
+                                          ? primaryColor
+                                          : Colors.grey[500],
+                                      width: 3.0)),
+                              width: 50.0,
+                              alignment: Alignment.center,
+                              child: Text(size),
+                            ),
+                          ))
                           .toList()),
                 ),
                 SizedBox(height: 16.0),
                 SizedBox(
                   height: 44.0,
                   child: RaisedButton(
-                    onPressed: size != null ? () {} : null,
-                    child: Text(
-                      "Adicionar ao Carrinho",
+                    onPressed: size != null
+                        ? () {
+                      if (UserModel.of(context).isLoggedIn()) {
+                        CartProduct cartProduct = CartProduct();
+                        cartProduct.size = size;
+                        cartProduct.quantity = 1;
+                        cartProduct.pid = _product.id;
+                        cartProduct.category = _product.category;
+
+
+                        CartModel.of(context).addCartItem(cartProduct);
+                      } else {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => LoginScreen()));
+                      }
+                    }
+                        : null,
+                    child: Text(UserModel.of(context).isLoggedIn() ?
+                    "Adicionar ao Carrinho" : "Entre para comprar",
                       style: TextStyle(fontSize: 16.0),
                     ),
                     color: primaryColor,

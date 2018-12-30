@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +13,9 @@ class UserModel extends Model {
   Map<String, dynamic> userData = Map();
 
   bool isLoading = false;
+
+  static UserModel of(BuildContext context) =>
+      ScopedModel.of<UserModel>(context);
 
   void signUp(Map<String, dynamic> userData, String pass,
       VoidCallback onSuccess, VoidCallback onFail) {
